@@ -7,8 +7,9 @@ import buff
 class Player:
     def __init__(self, level):
         self.level = level
-        if self.level >= 120:
+        if self.level > 120:
             self.level = 120
+        
         level_multiplier = 25
         if 60 > self.level >= 30:
             level_multiplier = 50
@@ -54,17 +55,47 @@ class Player:
             self.final_gift = self.gift_1 + ' & ' + self.gift_2
 
     def stats(self):
-        print(f'HP: {self.hp}\nRace: {self.race}\nGift: {self.final_gift}\nSkills: {self.abilities}\nLevel: {self.level}\nArcanium: {self.arcanium}')
+        print(f'HP: {self.hp}\nRace: {self.race}\nGift: {self.final_gift}\nSkills: {self.abilities}\nLevel: {self.level}\nArcanium: {self.arcanium}\n')
 
 player = Player(120)
 player.stats()
 
-command = input().split(' ')
-if command[0] == 'give':
-    if command[1] == 'ability':
-        player.abilities.append(command[2])
-        print(f'Skills: {player.abilities}')
-elif command[0] == 'remove':
-    if command[1] == 'ability':
-        player.abilities.remove(command[2])
-        print(f'Skills: {player.abilities}')
+running = True
+
+while running:
+
+    command = input().split(' ')
+    if command[0] == 'give':
+        if command[1] == 'ability':
+            valid_ability = False
+            error = False
+            if len(command) >= 4:
+                ability_tuple = (command[2], command[3])
+                command[2] = ' '.join(ability_tuple)
+            for i in range(len(skill_tree.hab)):
+                if command[2] == skill_tree.hab[i]:
+                    valid_ability = True
+                else:
+                    error = True
+            if valid_ability == True:
+                if not player.abilities.count(command[2]) >= 1:
+                    player.abilities.append(command[2])
+                    player.stats()
+                else:
+                    print('Error: This ability is already actived!')
+            elif error == True:
+                print('Error: No ability found!')
+
+    elif command[0] == 'remove':
+        if command[1] == 'ability':
+            if len(command) >= 4:
+                ability_tuple = (command[2], command[3])
+                command[2] = ' '.join(ability_tuple)
+            player.abilities.remove(command[2])
+            player.stats()
+
+    elif command[0] == 'evolve':
+        None
+    
+    elif command[0] == 'close':
+        running = False

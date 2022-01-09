@@ -7,7 +7,7 @@ rcb = {
     'Human': 1.1,
     'Elf': 1.3,
     'Lizzard': 1.6,
-    'Ogre': 2.10,
+    'Ogre': 2.1,
     'Dragon': 1.8
 }
 
