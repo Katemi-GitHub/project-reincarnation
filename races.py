@@ -6,16 +6,17 @@ l_rc = [
     'Orc',
     'Human',
     'Elf',
-    'Lizzard',
+    'Lizard',
     'Ogre',
-    'Dragon'
+    'Dragon',
+    'Mijin'
 ]
 
 e_rc = {
     'Goblin': ['Hobgoblin'],
     'Dwarf': ['Superior Dwarf'],
     'Orc': ['High Orc', 'King Orc'],
-    'Human': ['Superior Human'],
+    'Human': ['Superior Human', 'King Human'],
     'Lizard': ['Lizard Man'],
     'Ogre': ['Kijin'],
     'Dragon': ['Dracotaur']

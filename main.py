@@ -30,7 +30,7 @@ class Player:
         elif self.level >= 100:
             health_multiplier = 120
         
-        self.abilities = []
+        self.skills = []
         self.race = random.choice(races.l_rc)
         if self.race == 'Slime':
             skill_tree.gf.append('Mimic')
@@ -41,11 +41,11 @@ class Player:
         self.arcanium = int(100 + ((self.level * level_multiplier) * arc_buff))
         self.strength = random.randint(5, 50)
         if self.strength >= 40:
-            self.abilities.append(skill_tree.hab[11])
+            self.skills.append('Berserker')
         
         self.intelligence = random.randint(0, 100)
         if self.intelligence >= 85:
-            self.abilities.append(skill_tree.hab[0])
+            self.skills.append('Analize')
         
         self.gift_1 = random.choice(skill_tree.gf)
         self.gift_2 = random.choice(skill_tree.gf)
@@ -55,7 +55,7 @@ class Player:
             self.final_gift = self.gift_1 + ' & ' + self.gift_2
 
     def stats(self):
-        print(f'HP: {self.hp}\nRace: {self.race}\nGift: {self.final_gift}\nSkills: {self.abilities}\nLevel: {self.level}\nArcanium: {self.arcanium}\n')
+        print(f'HP: {self.hp}\nRace: {self.race}\nGift: {self.final_gift}\nSkills: {self.skills}\nLevel: {self.level}\nArcanium: {self.arcanium}\n')
 
 player = Player(120)
 player.stats()
@@ -66,36 +66,45 @@ while running:
 
     command = input().split(' ')
     if command[0] == 'give':
-        if command[1] == 'ability':
-            valid_ability = False
+        if command[1] == 'skill':
+            valid_skill = False
             error = False
-            if len(command) >= 4:
-                ability_tuple = (command[2], command[3])
-                command[2] = ' '.join(ability_tuple)
-            for i in range(len(skill_tree.hab)):
-                if command[2] == skill_tree.hab[i]:
-                    valid_ability = True
+            if len(command) == 4:
+                skill_tuple = (command[2], command[3])
+                command[2] = ' '.join(skill_tuple)
+            for i in range(len(skill_tree.skill)):
+                if command[2] == skill_tree.skill[i]:
+                    valid_skill = True
                 else:
                     error = True
-            if valid_ability == True:
-                if not player.abilities.count(command[2]) >= 1:
-                    player.abilities.append(command[2])
+            if valid_skill == True:
+                if not player.skills.count(command[2]) >= 1:
+                    player.skills.append(command[2])
                     player.stats()
                 else:
-                    print('Error: This ability is already actived!')
+                    print('Error: This skill is already activated!\n')
             elif error == True:
-                print('Error: No ability found!')
+                print('Error: No skill found!\n')
 
-    elif command[0] == 'remove':
-        if command[1] == 'ability':
-            if len(command) >= 4:
-                ability_tuple = (command[2], command[3])
-                command[2] = ' '.join(ability_tuple)
-            player.abilities.remove(command[2])
-            player.stats()
-
-    elif command[0] == 'evolve':
-        None
+    if command [0] == 'remove':
+        if command[1] == 'skill':
+            valid_skill = False
+            error = False
+            if len(command) == 4:
+                skill_tuple = (command[2], command[3])
+                command[2] = ' '.join(skill_tuple)
+            for i in range(len(player.skills)):
+                if command[2] == player.skills[i]:
+                    valid_skill = True
+                else:
+                    error = True
+            if valid_skill == True:
+                player.skills.remove(command[2])
+                player.stats()
+            elif error == True:
+                print('Error: This skill is not activated!\n')
+            elif len(player.skills) == 0:
+                print('Error: There are no skills left!\n')
     
-    elif command[0] == 'close':
+    if command[0] == 'close':
         running = False

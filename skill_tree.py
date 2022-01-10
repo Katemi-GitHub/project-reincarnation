@@ -4,18 +4,21 @@ gf = [
     'Fast mind'
 ]
 
-hab = [
+skill = [
     'Analize',
     'Absorb',
-    'Clone',
-    'Fire resistance',
-    'Ice resistance',
-    'Thermal resistance',
-    'Electric resistance',
+    'Fire Resistance',
+    'Ice Resistance',
+    'Thermal Resistance',
+    'Electric Resistance',
     'Regeneration',
     'Hide Aura',
     'Magic Acceleration',
     'Poison Nulification',
-    'Berseker',
-    'Magic Detection'
+    'Magic Detection',
+    'Anti-magic Spell',
+    'Skill Recomposition',
+    'Berserker',
+    'Clone',
+    'Divine Bless'
 ]

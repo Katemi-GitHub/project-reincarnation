@@ -6,9 +6,10 @@ rcb = {
     'Orc': 1.4,
     'Human': 1.1,
     'Elf': 1.3,
-    'Lizzard': 1.6,
+    'Lizard': 1.6,
     'Ogre': 2.1,
-    'Dragon': 1.8
+    'Dragon': 1.8,
+    'Mijin': 1.3
 }
 
 arcb = {
@@ -19,7 +20,8 @@ arcb = {
     'Orc': 1.2,
     'Human': 1.05,
     'Elf': 1.6,
-    'Lizzard': 1.3,
+    'Lizard': 1.3,
     'Ogre': 2.5,
-    'Dragon': 1.4
+    'Dragon': 1.4,
+    'Mijin': 2.75
 }
