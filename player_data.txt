@@ -1,0 +1,1 @@
+{"Race": "Human", "Level": 120, "HP": 15962, "Arkanius": 12700, "Intelligence": 12, "Strength": 32, "Gifts": "Great Skilled", "Skills": []}
