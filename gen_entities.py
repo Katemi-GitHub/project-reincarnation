@@ -5,7 +5,7 @@ import buff
 import json
 
 # Prototype 1
-class Player:
+class Entity:
     def __init__(self, level):
         self.level = level
         if self.level > 120:
@@ -56,10 +56,15 @@ class Player:
             self.final_gift = self.gift_1 + ' & ' + self.gift_2
 
     def stats(self):
-        print(f'HP: {self.hp}\nRace: {self.race}\nGift: {self.final_gift}\nSkills: {self.skills}\nLevel: {self.level}\nArkanius: {self.arkanius}\n')
+        print(f'    HP: {self.hp}\n    Race: {self.race}\n    Gift: {self.final_gift}\n    Skills: {self.skills}\n    Level: {self.level}\n    Arkanius: {self.arkanius}\n')
 
-player = Player(120)
+print('Player:')
+player = Entity(random.randint(2*2, 12/2))
 player.stats()
+
+print('Enemy:')
+enemy = Entity(random.randint(4, 6))
+enemy.stats()
 
 running = True
 
@@ -110,27 +115,75 @@ while running:
                 print('Error: There are no skills left!\n')
 
     if command[0] == 'save':
-        data = {
-            'Race' : player.race,
-            'Level' : player.level,
-            'HP' : player.hp,
-            'Arkanius' : player.arkanius,
-            'Intelligence' : player.intelligence,
-            'Strength' : player.strength,
-            'Gifts' : player.final_gift,
-            'Skills' : player.skills
-        }
+        if command[1] == 'player':
+            player_data = {
+                'Race' : player.race,
+                'Level' : player.level,
+                'HP' : player.hp,
+                'Arkanius' : player.arkanius,
+                'Intelligence' : player.intelligence,
+                'Strength' : player.strength,
+                'Gifts' : player.final_gift,
+                'Skills' : player.skills
+            }
 
-        with open('player_data.txt', 'w') as outfile:
-            json.dump(data, outfile)
-    
-    if command[0] == 'erase':
-        with open('player_data.txt', 'w') as outfile:
-            json.dump('', outfile)
+            with open('entity_data/player_data.txt', 'w') as outfile:
+                json.dump(player_data, outfile)
+        
+        if command[1] == 'enemy':
+            enemy_data = {
+                'Race' : enemy.race,
+                'Level' : enemy.level,
+                'HP' : enemy.hp,
+                'Arkanius' : enemy.arkanius,
+                'Intelligence' : enemy.intelligence,
+                'Strength' : enemy.strength,
+                'Gifts' : enemy.final_gift,
+                'Skills' : enemy.skills
+            }
+
+            with open('entity_data/enemy_data.txt', 'w') as outfile:
+                json.dump(enemy_data, outfile)
+        
+        if command[1] == 'all':
+            player_data = {
+                'Race' : player.race,
+                'Level' : player.level,
+                'HP' : player.hp,
+                'Arkanius' : player.arkanius,
+                'Intelligence' : player.intelligence,
+                'Strength' : player.strength,
+                'Gifts' : player.final_gift,
+                'Skills' : player.skills
+            }
+
+            enemy_data = {
+                'Race' : enemy.race,
+                'Level' : enemy.level,
+                'HP' : enemy.hp,
+                'Arkanius' : enemy.arkanius,
+                'Intelligence' : enemy.intelligence,
+                'Strength' : enemy.strength,
+                'Gifts' : enemy.final_gift,
+                'Skills' : enemy.skills
+            }
+
+            with open('entity_data/player_data.txt', 'w') as outfile:
+                json.dump(player_data, outfile)
+            
+            with open('entity_data/enemy_data.txt', 'w') as outfile:
+                json.dump(enemy_data, outfile)
 
     if command[0] == 'regen':
-        player = Player(120)
-        player.stats()
+        if command[1] == 'player':
+            print('New Player:')
+            player = Entity(random.randint(4, 6))
+            player.stats()
+
+        if command[1] == 'enemy':
+            print('New Enemy:')
+            enemy = Entity(random.randint(4, 6))
+            enemy.stats()
             
     if command[0] == 'close':
         running = False
