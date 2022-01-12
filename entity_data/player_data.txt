@@ -1,1 +1,0 @@
-{"Race": "Lizard", "Level": 4, "HP": 127, "Arkanius": 230, "Intelligence": 44, "Strength": 37, "Gifts": "Fast mind & Sage", "Skills": []}

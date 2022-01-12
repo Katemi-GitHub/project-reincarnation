@@ -2,10 +2,8 @@ import random
 import races
 import skill_tree
 import buff
-import json
 
-# Prototype 1
-class Entity:
+class Gen_Entity:
     def __init__(self, level):
         self.level = level
         if self.level > 120:
@@ -54,136 +52,36 @@ class Entity:
             self.final_gift = 'Great ' + self.gift_1
         else:
             self.final_gift = self.gift_1 + ' & ' + self.gift_2
+        self.status = 'alive'
+
+        for i in range(3):
+            self.skills.append(random.choice(skill_tree.st_skill))
+
+        for i in range(2):
+            self.skills.append(random.choice(list(skill_tree.dmg_skill['Physical'].keys())))
+
+        for i in range(2):
+            self.skills.append(random.choice(list(skill_tree.dmg_skill['Magic'].keys())))
+
+        duplicated_skills = []
+        for i in range(len(self.skills)):
+            if self.skills.count(self.skills[i]) > 1:
+                duplicated_skills.append(self.skills[i])
+        if len(duplicated_skills) > 0:
+            for i in range(int(len(duplicated_skills)/2)):
+                duplicated_skills.remove(duplicated_skills[int(i*2)])
+        for i in range(len(duplicated_skills)):
+            self.skills.remove(duplicated_skills[i])
+            self.skills[self.skills.index(duplicated_skills[i])] = 'Great ' + self.skills[self.skills.index(duplicated_skills[i])]
+    
+    def attack(self, enemy_hp):
+        enemy_hp -= self.strength
+        return enemy_hp
+    
+    def get_damaged(self, damage):
+        self.hp -= damage
+        if self.hp <= 0:
+            self.status = 'defeat'
 
     def stats(self):
         print(f'    HP: {self.hp}\n    Race: {self.race}\n    Gift: {self.final_gift}\n    Skills: {self.skills}\n    Level: {self.level}\n    Arkanius: {self.arkanius}\n')
-
-print('Player:')
-player = Entity(random.randint(2*2, 12/2))
-player.stats()
-
-print('Enemy:')
-enemy = Entity(random.randint(4, 6))
-enemy.stats()
-
-running = True
-
-while running:
-
-    command = input().split(' ')
-    if command[0] == 'give':
-        if command[1] == 'skill':
-            valid_skill = False
-            error = False
-            if len(command) == 4:
-                skill_tuple = (command[2], command[3])
-                command[2] = ' '.join(skill_tuple)
-            #-----------------------------------------------------------------
-            for i in range(len(skill_tree.skill)):
-                if command[2] == skill_tree.skill[i]:
-                    valid_skill = True
-                else:
-                    error = True
-            if valid_skill == True:
-                if not player.skills.count(command[2]) >= 1:
-                    player.skills.append(command[2])
-                    player.stats()
-                else:
-                    print('Error: This skill is already activated!\n')
-            elif error == True:
-                print('Error: No skill found!\n')
-            #-----------------------------------------------------------------
-
-    if command [0] == 'remove':
-        if command[1] == 'skill':
-            valid_skill = False
-            error = False
-            if len(command) == 4:
-                skill_tuple = (command[2], command[3])
-                command[2] = ' '.join(skill_tuple)
-            for i in range(len(player.skills)):
-                if command[2] == player.skills[i]:
-                    valid_skill = True
-                else:
-                    error = True
-            if valid_skill == True:
-                player.skills.remove(command[2])
-                player.stats()
-            elif error == True:
-                print('Error: This skill is not activated!\n')
-            elif len(player.skills) == 0:
-                print('Error: There are no skills left!\n')
-
-    if command[0] == 'save':
-        if command[1] == 'player':
-            player_data = {
-                'Race' : player.race,
-                'Level' : player.level,
-                'HP' : player.hp,
-                'Arkanius' : player.arkanius,
-                'Intelligence' : player.intelligence,
-                'Strength' : player.strength,
-                'Gifts' : player.final_gift,
-                'Skills' : player.skills
-            }
-
-            with open('entity_data/player_data.txt', 'w') as outfile:
-                json.dump(player_data, outfile)
-        
-        if command[1] == 'enemy':
-            enemy_data = {
-                'Race' : enemy.race,
-                'Level' : enemy.level,
-                'HP' : enemy.hp,
-                'Arkanius' : enemy.arkanius,
-                'Intelligence' : enemy.intelligence,
-                'Strength' : enemy.strength,
-                'Gifts' : enemy.final_gift,
-                'Skills' : enemy.skills
-            }
-
-            with open('entity_data/enemy_data.txt', 'w') as outfile:
-                json.dump(enemy_data, outfile)
-        
-        if command[1] == 'all':
-            player_data = {
-                'Race' : player.race,
-                'Level' : player.level,
-                'HP' : player.hp,
-                'Arkanius' : player.arkanius,
-                'Intelligence' : player.intelligence,
-                'Strength' : player.strength,
-                'Gifts' : player.final_gift,
-                'Skills' : player.skills
-            }
-
-            enemy_data = {
-                'Race' : enemy.race,
-                'Level' : enemy.level,
-                'HP' : enemy.hp,
-                'Arkanius' : enemy.arkanius,
-                'Intelligence' : enemy.intelligence,
-                'Strength' : enemy.strength,
-                'Gifts' : enemy.final_gift,
-                'Skills' : enemy.skills
-            }
-
-            with open('entity_data/player_data.txt', 'w') as outfile:
-                json.dump(player_data, outfile)
-            
-            with open('entity_data/enemy_data.txt', 'w') as outfile:
-                json.dump(enemy_data, outfile)
-
-    if command[0] == 'regen':
-        if command[1] == 'player':
-            print('New Player:')
-            player = Entity(random.randint(4, 6))
-            player.stats()
-
-        if command[1] == 'enemy':
-            print('New Enemy:')
-            enemy = Entity(random.randint(4, 6))
-            enemy.stats()
-            
-    if command[0] == 'close':
-        running = False

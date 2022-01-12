@@ -1,0 +1,41 @@
+{
+    "player":{
+        "Race":"demonio kk",
+        "Level":0,
+        "HP":1,
+        "Arkanius":1,
+        "Intelligence":1,
+        "Strength":1,
+        "Gifts":"",
+        "Skills":[
+            "Dying"
+        ]
+    },
+    "DIOS":{
+        "Race":"1",
+        "Level":999999,
+        "HP":999999,
+        "Arkanius":999999,
+        "Intelligence":999999,
+        "Strength":999999,
+        "Gifts":"Great Fast Mind, Great Skilled, Great Sage, Great Mimic",
+        "Skills":[
+            "Analize",
+            "Absorb",
+            "Fire Resistance",
+            "Ice Resistance",
+            "Thermal Resistance",
+            "Electric Resistance",
+            "Regeneration",
+            "Hide Aura",
+            "Magic Acceleration",
+            "Poison Nulification",
+            "Magic Detection",
+            "Anti-magic Spell",
+            "Skill Recomposition",
+            "Berserker",
+            "Clone",
+            "Divine Bless"
+        ]
+    }
+}
